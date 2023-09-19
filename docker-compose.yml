@@ -1,0 +1,45 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: koma
+      MONGO_INITDB_ROOT_PASSWORD: 12345
+    networks:
+      - app-network
+
+  auth:
+    build:
+      context: ./Auth
+    container_name: Auth
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb+srv://koma:12345@test.wahq38b.mongodb.net/
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  category_coupon:
+    build:
+      context: ./category_coupon_api
+    container_name: category_coupon
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb:mongodb+srv://koma:12345@test.wahq38b.mongodb.net/
+      - Auth_API=http://localhost:5000
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
