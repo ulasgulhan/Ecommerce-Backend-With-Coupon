@@ -10,20 +10,9 @@ const ProductSchema = new mongoose.Schema(
     color: {type: Array, require: true},
     price: {type: Number, require: true},
     inStock: {type: Boolean, default: true},
-    comments: {type: Array, ref: "Comment"},
     averageRating: {type: Number}
     },
     {timestamps: true}
 );
-
-ProductSchema.methods.calculateAverageRating = function () {
-    if (this.comments.length === 0) {
-      this.averageRating = 0;
-    } else {
-      const totalRating = this.comments.reduce((acc, rating) => acc + rating.rating, 0);
-      this.averageRating = totalRating / this.comments.length;
-    }
-  };
-  
 
 module.exports = mongoose.model("Product", ProductSchema) 

@@ -15,11 +15,13 @@ const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const couponCodeDiscount  = require("./routes/couponcodes");
 const UserCouponCodeDiscount  = require("./models/CouponCode");
+const bodyParser = require('body-parser');
 
 
 
 const app = express();
 
+app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("DB Connection Successfull!"))

@@ -11,9 +11,11 @@ dotenv.config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const commentRouter = require('./routes/comment');
+const bodyParser = require('body-parser');
 
 const app = express();
 
+app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("DB Connection Successfull!"))

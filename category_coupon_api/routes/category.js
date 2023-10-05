@@ -35,6 +35,9 @@ try {
 router.get("/", async (req, res) => {
   try{
     const categorys = await Category.find()
+    if (!categorys) {
+      return res.status(404).json({ error: 'Category not found.' });
+    }
     res.status(200).send(categorys)
   }catch(err){
     res.status(500).send(err)
@@ -44,6 +47,9 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try{
     const cat = await Category.findById(req.params.id)
+    if (!categorys) {
+      return res.status(404).json({ error: 'Category not found.' });
+    }
     res.status(200).send(cat)
   }catch(err){
     res.status(500).send(err)

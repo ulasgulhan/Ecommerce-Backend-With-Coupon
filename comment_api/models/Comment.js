@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const CommentSchema = new mongoose.Schema(
     {
         product:{
-            type: String,
-            ref: "Product"
+            type: mongoose.Schema.ObjectId,
+            ref:"Product"
         },
         userId:{
             type: String,
             require: true,
-            ref:"User"
+           
         },
         rating: {
             type: Number,
